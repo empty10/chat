@@ -22,7 +22,9 @@
       </div>
     </div>
     <div class="loginBtn">
-      登录
+      <div class="btnWrap">
+        登录
+      </div>
     </div>
   </div>
 </template>
