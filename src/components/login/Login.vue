@@ -1,8 +1,7 @@
 <template>
-  <div class="loginBox">
+  <div :class="['loginBox' , {'loginBoxBlur':isBackgroundBlur}]">
     <div class="head" v-show="isShowAvatar">
       <div class="headImg">
-        Avatar
       </div>
     </div>
     <div class="contentBox">
@@ -11,17 +10,19 @@
           icon
         </div>
         <div class="nickBox">
-          <input type="text"  placeholder="请输入昵称">
+          <input type="text" v-model="nickValue" class="inputNick" placeholder="请输入昵称">
         </div>
       </div>
       <div class="password">
           <div class="passIcon">
             icon
           </div>
-        <input type="password" class="passBox" >
+          <div class="passBox">
+            <input type="password" v-model="passValue" class="inputPass" placeholder="密码">
+          </div>
       </div>
     </div>
-    <div class="loginBtn">
+    <div class="loginBtn" @click="enterChat">
       <div class="btnWrap">
         登录
       </div>
@@ -34,7 +35,20 @@
     name: "Login",
     data(){
       return{
-        isShowAvatar:true
+        isShowAvatar:true,
+        isBackgroundBlur:false,
+        nickValue:'',
+        passValue:''
+      }
+    },
+    methods:{
+      enterChat(){
+        if(!this.passValue || !this.nickValue ){
+          let text= !this.nickValue?'昵称':'密码'
+          alert('请输入'+text)
+          return
+        }
+        this.$router.push('/Chat')
       }
     }
 
