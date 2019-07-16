@@ -13,7 +13,7 @@
 
 <script>
   export default {
-    name: "Login",
+    name: "Home",
     data() {
       return{
 
@@ -24,6 +24,8 @@
         console.log('111chat');
         this.$router.push('/Chat')
       }
+
+      //todo如果有历史登录记录，则只展示背景图片，不展示'登录'，'注册'
     }
   }
 </script>

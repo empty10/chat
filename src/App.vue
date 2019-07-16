@@ -6,7 +6,13 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+
+  methods:{
+    //todo
+    // ip定位
+
+  }
 }
 </script>
 
