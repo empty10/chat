@@ -1,6 +1,6 @@
 <template>
-  <div :class="$style.chat">
-    <div :class="$style.chatHeader">
+  <div class="chat">
+    <div class="chatHeader">
       weChat
     </div>
   </div>
