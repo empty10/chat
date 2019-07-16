@@ -1,0 +1,56 @@
+.loginBox{
+  width: 100%;
+  height: 100%;
+  min-height: 667px;
+  float: left;
+}
+
+.head{
+  margin-top: 70px;
+  margin-bottom: 30px;
+}
+
+.headImg{
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  background-color: #44b549;
+  border-radius: 50px;
+}
+
+.contentBox{
+  height: 100px;
+  padding: 0 50px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nickname{
+  width: 100%;
+  display: flex;
+}
+
+.nickBox{
+  width: 100%;
+  padding: 0 20px;
+}
+.password{
+  width: 100%;
+  display: flex;
+}
+.passBox{
+  width: 100%;
+  padding: 0 20px;
+}
+
+
+.login-btn{
+  width: 100%;
+  height: 80px;
+  margin: 0 50px;
+  background-color: #44b549;
+  font-size: 32px;
+}
