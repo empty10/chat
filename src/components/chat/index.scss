@@ -26,8 +26,9 @@
   line-height: 3rem;
   font-size: 1.2rem;
   box-sizing: border-box;
-  background-color: #e5e5e5;
+  background-color: #f3f3f3;
   box-shadow: 0  -0.25rem 0.25rem -0.25rem #e5e5e5;
+  border-top: 1px solid #e5e5e5;
 }
 
 .mojiBox{
@@ -70,4 +71,47 @@
   min-height: 100%;
   padding: 3rem 0;
   box-sizing: border-box;
+  background-color: #f5f5f5;
+}
+
+.messageList{
+  width: 100%;
+}
+
+.listItem{
+  width: 100%;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+.myself{
+  flex-direction: row;
+}
+
+.itemContent{
+  max-width: 60%;
+  font-size: 1rem;
+  padding: 0.5rem;
+  text-align:left;
+  word-break: break-word;
+  border-radius: 0 0.5rem  0.5rem 0.5rem;
+  background-color: #ffffff;
+}
+.myselfContent{
+  background-color: rgba(0, 164, 0, 0.61);
+  border-radius: 0.5rem 0  0.5rem 0.5rem;
+}
+
+.itemFace{
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.5rem;
+
+  img{
+    width: 100%;
+    height: 100%;
+  }
 }
