@@ -10,7 +10,7 @@
           icon
         </div>
         <div class="nickBox">
-          <input type="text" v-model="nickValue" class="inputNick" placeholder="请输入昵称">
+          <input type="text" v-model="nickName" class="inputNick" placeholder="请输入昵称">
         </div>
       </div>
       <div class="password">
@@ -31,23 +31,38 @@
 </template>
 
 <script>
+  import io from 'socket.io-client'
+
+  // 建立socket.io通信
+  const socket = io.connect('http://localhost:8080')
+
   export default {
     name: 'Login',
     data () {
       return {
         isShowAvatar: true,
         isBackgroundBlur: false,
-        nickValue: '',
+        nickName: '',
         passValue: ''
       }
     },
     methods: {
       enterChat () {
-        if (!this.passValue || !this.nickValue) {
-          let text = !this.nickValue ? '昵称' : '密码'
+        if (!this.passValue || !this.nickName) {
+          let text = !this.nickName ? '昵称' : '密码'
           alert('请输入' + text)
           return
         }
+
+        /* 定义用户名 */
+        if (this.nickName) {
+          /* 向服务端发送登录事件 */
+          socket.emit('login', {username: this.nickName})
+          localStorage.nickName = this.nickName
+        } else {
+          alert('请输入昵称')
+        }
+
         this.$router.push('/Chat')
       }
     }

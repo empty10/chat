@@ -6,7 +6,7 @@
     <div class="chatContent">
       <ul class="messageList">
         <template  v-for="item in messages">
-          <li class="information" v-if="item.form=='system'">
+          <li class="information" v-if="item.from=='system'">
             <div class="infoBox">
               {{item.content}}
             </div>
@@ -35,11 +35,17 @@
 </template>
 
 <script>
+  import io from 'socket.io-client'
+
+  // 建立socket.io通信
+  const socket = io.connect('http://localhost:8080')
   export default {
     name: 'Chat',
     data () {
       return {
         inputValue: '',
+        nickName: '',
+        portrait: '',
         messages: [
           {
             date: '19-07-17 15:06:32',
@@ -59,14 +65,55 @@
           },
           {
             date: '19-07-17',
-            form: 'system',
+            from: 'system',
             content: '张三加入群聊'
           }
-        ]
+        ],
+        onlineTip: ''
       }
     },
-    methods: {
+    created () {
+      try {
+        this.nickName = JSON.parse(localStorage.nickName)
+      } catch (e) {
+        this.nickName = 'aaa'
+      }
+    },
+    mounted () {
+      // 发送上线事件
+      // 监听通信事件
+      socket.on('online', name => {
+        if (!name) {
+          return
+        }
 
+        this.messages.push({
+          from: 'system',
+          content: `${name}加入群聊`
+        })
+      })
+
+      socket.on('receiveMsg', data => {
+        this.messages.push(data)
+      })
+      // 发送上线事件
+      socket.emit('online', this.nickName)
+    },
+
+    methods: {
+      sendMsg () {
+        if (!this.inputText) {
+          return
+        }
+
+        socket.emit('sendMsg', {
+          from: 'other',
+          date: this.getTime(),
+          nickName: this.nickName,
+          portrait: this.portrait,
+          location: this.location
+        })
+      }
     }
 
   }

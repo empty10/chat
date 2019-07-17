@@ -13,6 +13,37 @@ const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
+// 搭建一个socket.io服务
+const app = require('express')
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+
+server.listen(8080)
+
+let oSockets = []
+
+io.sockets.on('connection', socket => {
+  console.log('用户链接成功')
+  oSockets.push(socket)
+
+  // 群聊
+  socket.on('sendMsg', data => {
+    socket.broadcast.emit('receiveMsg', data)
+  })
+
+  // 上线
+  socket.on('online', data => {
+    socket.broadcast.emit('online', data)
+    console.log('上线了', data)
+  })
+
+  // 断开连接
+  socket.on('disconnect', () => {
+    oSockets.filter(item => item !== socket)
+    console.log('用户离线')
+  })
+})
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -25,8 +56,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
-        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
-      ],
+        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') }
+      ]
     },
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
@@ -41,7 +72,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
-      poll: config.dev.poll,
+      poll: config.dev.poll
     }
   },
   plugins: [
@@ -82,7 +113,7 @@ module.exports = new Promise((resolve, reject) => {
       // Add FriendlyErrorsPlugin
       devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
         compilationSuccessInfo: {
-          messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
+          messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`]
         },
         onErrors: config.dev.notifyOnErrors
         ? utils.createNotifierCallback()
