@@ -13,20 +13,20 @@
 
 <script>
   export default {
-    name: "Home",
-    data() {
-      return{
+    name: 'Home',
+    data () {
+      return {
 
       }
     },
-    methods:{
-      enterLogin(){
+    methods: {
+      enterLogin () {
         this.$router.push('/Login')
       },
-      enterRegister(){
+      enterRegister () {
         this.$router.push('/Register')
       }
-      //todo如果有历史登录记录，则只展示背景图片，不展示'登录'，'注册'
+      // todo如果有历史登录记录，则只展示背景图片，不展示'登录'，'注册'
     }
   }
 </script>

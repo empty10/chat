@@ -32,20 +32,20 @@
 
 <script>
   export default {
-    name: "Login",
-    data(){
-      return{
-        isShowAvatar:true,
-        isBackgroundBlur:false,
-        nickValue:'',
-        passValue:''
+    name: 'Login',
+    data () {
+      return {
+        isShowAvatar: true,
+        isBackgroundBlur: false,
+        nickValue: '',
+        passValue: ''
       }
     },
-    methods:{
-      enterChat(){
-        if(!this.passValue || !this.nickValue ){
-          let text= !this.nickValue?'昵称':'密码'
-          alert('请输入'+text)
+    methods: {
+      enterChat () {
+        if (!this.passValue || !this.nickValue) {
+          let text = !this.nickValue ? '昵称' : '密码'
+          alert('请输入' + text)
           return
         }
         this.$router.push('/Chat')

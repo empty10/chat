@@ -8,8 +8,8 @@
 export default {
   name: 'App',
 
-  methods:{
-    //todo
+  methods: {
+    // todo
     // ip定位
 
   }
@@ -27,6 +27,8 @@ export default {
   text-align: center;
   color: #222;
   margin: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
