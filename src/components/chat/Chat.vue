@@ -8,9 +8,9 @@
     </div>
     <div class="chatFooter">
       <div class="mojiBox">
-        moji
+
       </div>
-      <textarea class="textBox" >
+      <textarea class="textBox" v-model="inputValue">
 
       </textarea>
       <div class="sendBtn">
@@ -22,7 +22,17 @@
 
 <script>
   export default {
-    name: 'Chat'
+    name: 'Chat',
+    data () {
+      return {
+        inputValue: ''
+
+      }
+    },
+    methods: {
+
+    }
+
   }
 </script>
 
