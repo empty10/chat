@@ -152,8 +152,6 @@
       },
 
       fixedBottom () {
-        console.log('top===', this.$refs.chatContent.scrollTop)
-        console.log('height====', this.$refs.chatContent.scrollHeight)
         clearTimeout(this.timer)
         this.timer = setTimeout(() => {
           this.$refs.chatContent.scrollTop = this.$refs.chatContent.scrollHeight
