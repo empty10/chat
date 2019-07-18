@@ -13,7 +13,8 @@
           </li>
           <li class="listItem" :class="{ 'myself':item.from == 'myself' }" v-else>
               <div class="itemWrap">
-                <div class="userName">{{item.nickName}}</div>
+                <div class="userName" v-show="item.from=='other' " >{{item.nickName}}</div>
+
                 <div class="itemContent" :class="{'myselfContent':item.from == 'myself'}">{{item.content}}</div>
               </div>
               <div class="itemFace">
