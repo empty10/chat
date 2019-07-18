@@ -3,8 +3,8 @@
     <div class="chatHeader">
       weChat
     </div>
-    <div class="chatContent">
-      <ul class="messageList">
+    <div class="chatContent" ref="chatContent">
+      <ul class="messageList" >
         <template  v-for="item in messages">
           <li class="information" v-if="item.from=='system'">
             <div class="infoBox">
@@ -28,10 +28,10 @@
       <div class="mojiBox">
 
       </div>
-      <textarea class="textBox" v-model="inputValue">
+      <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter="sendMsg">
 
       </textarea>
-      <div class="sendBtn" @click="sendMsg" @keyup.enter="sendMsg">
+      <div class="sendBtn" @click="sendMsg" >
         发送
       </div>
     </div>
@@ -62,7 +62,7 @@
           },
           {
             date: '19-07-17 15:06:32',
-            from: 'others',
+            from: 'other',
             nickName: 'empty',
             portrait: 'https://image.guazistatic.com/gz01190717/15/51/c5d5be61ec6032c79c7abc60ced9ed08.jpg',
             content: 'dfhjdsg132131237653512736812735123521367',
@@ -86,6 +86,14 @@
 
       this.portrait = 'https://image.guazistatic.com/gz01190717/15/51/c5d5be61ec6032c79c7abc60ced9ed08.jpg'
       console.log('huode nickname', this.nickName)
+    },
+    watch: {
+      messages: {
+        handler () {
+          this.fixedBottom()
+        },
+        deep: true
+      }
     },
     mounted () {
       // 发送上线事件
@@ -141,6 +149,15 @@
           location: this.location,
           content: this.inputValue
         })
+      },
+
+      fixedBottom () {
+        console.log('top===', this.$refs.chatContent.scrollTop)
+        console.log('height====', this.$refs.chatContent.scrollHeight)
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.$refs.chatContent.scrollTop = this.$refs.chatContent.scrollHeight
+        }, 20)
       }
     }
 
