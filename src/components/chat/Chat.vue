@@ -48,40 +48,18 @@
     data () {
       return {
         inputValue: '',
-        nickName: '',
+        nickName: 'aaa',
         portrait: '',
         location: '北京',
-        messages: [
-          {
-            date: '19-07-17 15:06:32',
-            from: 'myself',
-            nickName: 'empty',
-            portrait: 'https://image.guazistatic.com/gz01190717/15/51/c5d5be61ec6032c79c7abc60ced9ed08.jpg',
-            content: 'dfhjdsg132131237653512736812735123521367',
-            location: '北京'
-          },
-          {
-            date: '19-07-17 15:06:32',
-            from: 'other',
-            nickName: 'empty',
-            portrait: 'https://image.guazistatic.com/gz01190717/15/51/c5d5be61ec6032c79c7abc60ced9ed08.jpg',
-            content: 'dfhjdsg132131237653512736812735123521367',
-            location: '北京'
-          },
-          {
-            date: '19-07-17',
-            from: 'system',
-            content: '张三加入群聊'
-          }
-        ],
+        messages: [],
         onlineTip: ''
       }
     },
     created () {
       try {
         this.nickName = JSON.parse(localStorage.nickName)
-      } catch (e) {
-        this.nickName = 'aaa'
+      } catch (err) {
+        console.log(err)
       }
 
       this.portrait = 'https://image.guazistatic.com/gz01190717/15/51/c5d5be61ec6032c79c7abc60ced9ed08.jpg'
@@ -110,6 +88,7 @@
       })
 
       socket.on('receiveMsg', data => {
+        console.log(data)
         this.messages.push(data)
       })
       // 发送上线事件
