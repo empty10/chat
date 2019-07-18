@@ -27,6 +27,9 @@
         登录
       </div>
     </div>
+    <div class="lifeTip">
+      weChat is a life way
+    </div>
   </div>
 </template>
 
