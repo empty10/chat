@@ -20,26 +20,61 @@ const io = require('socket.io')(server)
 
 server.listen(8080)
 
-let oSockets = []
+let users = []
 
 io.sockets.on('connection', socket => {
-  oSockets.push(socket)
+  /* 是否是新用户标识 */
+  let isNewPerson = true
+  /* 当前登录用户 */
+  let username = null
+  /* 监听登录 */
+  socket.on('login', function (data) {
+    for (var i = 0; i < users.length; i++) {
+      if (users[i].username === data.username) {
+        isNewPerson = false
+        break
+      } else {
+        isNewPerson = true
+      }
+    }
+    console.log('users===', users)
+    if (isNewPerson) {
+      username = data.username
+      users.push({
+        username: data.username
+      })
+      /* 登录成功 */
+      socket.emit('loginSuccess', data)
+      /* 向所有连接的客户端广播add事件 */
+      io.sockets.emit('add', data)
+    } else {
+      /* 登录失败 */
+      socket.emit('loginFail', '')
+    }
+  })
 
   // 群聊
   socket.on('sendMsg', data => {
-    socket.broadcast.emit('receiveMsg', data)
+    io.sockets.emit('receiveMsg', data)
   })
 
   // 上线
   socket.on('online', data => {
-    socket.broadcast.emit('online', data)
+    // socket.broadcast.emit('online', data)
+    io.sockets.emit('online', data)
+    socket.emit('online', data)
     console.log('上线了', data)
   })
 
   // 断开连接
   socket.on('disconnect', () => {
-    oSockets.filter(item => item !== socket)
-    console.log('用户离线')
+    /* 向所有连接的客户端广播leave事件 */
+    io.sockets.emit('leave', username)
+    users.map(function (val, index) {
+      if (val.username === username) {
+        users.splice(index, 1)
+      }
+    })
   })
 })
 

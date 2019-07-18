@@ -62,21 +62,35 @@
         console.log(err)
       }
 
+      if (localStorage.record_chat) {
+        this.messages = JSON.parse(localStorage.record_chat)
+      }
+
       this.portrait = 'https://image.guazistatic.com/gz01190717/15/51/c5d5be61ec6032c79c7abc60ced9ed08.jpg'
       console.log('huode nickname', this.nickName)
     },
     watch: {
       messages: {
         handler () {
+          localStorage.record_chat = JSON.stringify(this.messages)
           this.fixedBottom()
         },
         deep: true
       }
     },
     mounted () {
-      // 发送上线事件
+      // 监听登录成功事件
+      /* socket.on('add', data => {
+        console.log('data==', typeof data, data)
+        this.messages.push({
+          from: 'system',
+          content: `${data.username}登录成功`
+        })
+      }) */
+
       // 监听通信事件
       socket.on('online', name => {
+        console.log('online====', name)
         if (!name) {
           return
         }
@@ -87,12 +101,26 @@
         })
       })
 
+      // 监听通信事件
+      socket.on('disconnect', name => {
+        console.log('disconnect====', name)
+        if (!name) {
+          return
+        }
+
+        this.messages.push({
+          from: 'system',
+          content: `${name}离开群聊`
+        })
+      })
+
       socket.on('receiveMsg', data => {
         console.log(data)
+        if (data.nickName === this.nickName) {
+          return
+        }
         this.messages.push(data)
       })
-      // 发送上线事件
-      socket.emit('online', this.nickName)
     },
 
     methods: {

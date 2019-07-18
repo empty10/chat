@@ -35,6 +35,7 @@
 
 <script>
   import io from 'socket.io-client'
+  // import {debounce} from '../../util/debounce.js'
 
   // 建立socket.io通信
   const socket = io.connect('http://localhost:8080')
@@ -61,15 +62,22 @@
         if (this.nickName) {
           /* 向服务端发送登录事件 */
           socket.emit('login', {username: this.nickName})
-          localStorage.nickName = this.nickName
         } else {
           alert('请输入昵称')
         }
 
-        this.$router.push('/Chat')
+        socket.on('loginSuccess', data => {
+          console.log(data)
+          localStorage.nickName = JSON.stringify(data.username)
+          this.$router.push('/Chat')
+        })
+
+        socket.on('loginFail', data => {
+          console.log(data)
+          alert('昵称重复，登录失败')
+        })
       }
     }
-
   }
 </script>
 
