@@ -23,7 +23,6 @@ server.listen(8080)
 let oSockets = []
 
 io.sockets.on('connection', socket => {
-  console.log('用户链接成功')
   oSockets.push(socket)
 
   // 群聊
