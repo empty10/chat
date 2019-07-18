@@ -3,9 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import moment from 'moment'
 import './style/reset.css'
 
+Vue.prototype.moment = moment
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
