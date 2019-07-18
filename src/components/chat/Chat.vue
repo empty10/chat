@@ -12,7 +12,10 @@
             </div>
           </li>
           <li class="listItem" :class="{ 'myself':item.from == 'myself' }" v-else>
-              <div class="itemContent" :class="{'myselfContent':item.from == 'myself'}">{{item.content}}</div>
+              <div class="itemWrap">
+                <div class="userName">{{item.nickName}}</div>
+                <div class="itemContent" :class="{'myselfContent':item.from == 'myself'}">{{item.content}}</div>
+              </div>
               <div class="itemFace">
                 <img :src="item.portrait" alt="">
               </div>
@@ -27,7 +30,7 @@
       <textarea class="textBox" v-model="inputValue">
 
       </textarea>
-      <div class="sendBtn">
+      <div class="sendBtn" @click="sendMsg" @keyup.enter="sendMsg">
         发送
       </div>
     </div>
@@ -46,6 +49,7 @@
         inputValue: '',
         nickName: '',
         portrait: '',
+        location: '北京',
         messages: [
           {
             date: '19-07-17 15:06:32',
@@ -78,6 +82,9 @@
       } catch (e) {
         this.nickName = 'aaa'
       }
+
+      this.portrait = 'https://image.guazistatic.com/gz01190717/15/51/c5d5be61ec6032c79c7abc60ced9ed08.jpg'
+      console.log('huode nickname', this.nickName)
     },
     mounted () {
       // 发送上线事件
@@ -102,16 +109,36 @@
 
     methods: {
       sendMsg () {
-        if (!this.inputText) {
+        if (!this.inputValue) {
           return
         }
+        console.log('点击发送', this.inputValue)
 
         socket.emit('sendMsg', {
           from: 'other',
           date: this.getTime(),
           nickName: this.nickName,
           portrait: this.portrait,
-          location: this.location
+          location: this.location,
+          content: this.inputValue
+        })
+
+        this.pushMine()
+        this.inputValue = ''
+      },
+
+      getTime () {
+        return this.moment().format('YYYY-MM-DD HH:mm:ss')
+      },
+
+      pushMine () {
+        this.messages.push({
+          from: 'myself',
+          date: this.getTime(),
+          nickname: this.nickName,
+          portrait: this.portrait,
+          location: this.location,
+          content: this.inputValue
         })
       }
     }

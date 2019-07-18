@@ -92,8 +92,16 @@
   flex-direction: row;
 }
 
+.itemWrap{
+  max-width: 70%;
+}
+
+.userName{
+  text-align: left;
+  color: #b2b2b2;
+  font-size: 0.9rem;
+}
 .itemContent{
-  max-width: 60%;
   font-size: 1rem;
   padding: 0.5rem;
   text-align:left;
