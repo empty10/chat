@@ -19,6 +19,8 @@ export default {
 <style>
   body{
     margin: 0;
+    display: flex;
+    justify-content: center;
   }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -27,8 +29,10 @@ export default {
   text-align: center;
   color: #222;
   margin: 0;
-  width: 100%;
-  height: 100%;
+  max-width: 1242px;
+  width: 750px;
+  min-height: 21rem;
+  height: 1334px;
   display: flex;
   align-items: center;
   justify-content: center;

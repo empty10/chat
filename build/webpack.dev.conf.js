@@ -62,7 +62,7 @@ io.sockets.on('connection', socket => {
   socket.on('online', data => {
     // socket.broadcast.emit('online', data)
     io.sockets.emit('online', data)
-    socket.emit('online', data)
+
     console.log('上线了', data)
   })
 
@@ -70,6 +70,7 @@ io.sockets.on('connection', socket => {
   socket.on('disconnect', () => {
     /* 向所有连接的客户端广播leave事件 */
     io.sockets.emit('leave', username)
+    console.log(username, '离开群聊')
     users.map(function (val, index) {
       if (val.username === username) {
         users.splice(index, 1)

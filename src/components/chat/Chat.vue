@@ -102,16 +102,15 @@
       })
 
       // 监听通信事件
-      socket.on('disconnect', name => {
-        console.log('disconnect====', name)
-        if (!name) {
-          return
+      socket.on('leave', name => {
+        if (name != null) {
+          console.log(this.messages)
+          debugger
+          this.messages && this.messages.push({
+            from: 'system',
+            content: `${name}离开群聊`
+          })
         }
-
-        this.messages.push({
-          from: 'system',
-          content: `${name}离开群聊`
-        })
       })
 
       socket.on('receiveMsg', data => {
@@ -121,6 +120,11 @@
         }
         this.messages.push(data)
       })
+
+      // 发送上线事件
+      console.log('----上线', this.nickName)
+      debugger
+      socket.emit('online', this.nickname)
     },
 
     methods: {
