@@ -80,13 +80,12 @@
     },
     mounted () {
       // 监听登录成功事件
-      /* socket.on('add', data => {
-        console.log('data==', typeof data, data)
+      socket.on('add', data => {
         this.messages.push({
           from: 'system',
-          content: `${data.username}登录成功`
+          content: `系统消息：${data.username}进入群聊`
         })
-      }) */
+      })
 
       // 监听通信事件
       socket.on('online', name => {
@@ -97,7 +96,7 @@
 
         this.messages.push({
           from: 'system',
-          content: `${name}加入群聊`
+          content: `系统消息：${name}加入群聊`
         })
       })
 
@@ -105,16 +104,14 @@
       socket.on('leave', name => {
         if (name != null) {
           console.log(this.messages)
-          debugger
           this.messages && this.messages.push({
             from: 'system',
-            content: `${name}离开群聊`
+            content: `系统消息：${name}离开群聊`
           })
         }
       })
 
       socket.on('receiveMsg', data => {
-        console.log(data)
         if (data.nickName === this.nickName) {
           return
         }
@@ -123,8 +120,6 @@
 
       // 发送上线事件
       console.log('----上线', this.nickName)
-      debugger
-      socket.emit('online', this.nickname)
     },
 
     methods: {
