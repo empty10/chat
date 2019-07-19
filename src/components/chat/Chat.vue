@@ -56,18 +56,18 @@
       }
     },
     created () {
-      try {
-        this.nickName = JSON.parse(localStorage.nickName)
-      } catch (err) {
-        console.log(err)
+      if (!this.$store.state.isLogin) {
+        console.log('尚未登录')
+        this.$router.push('/')
+        return
       }
+      this.nickName = this.$store.state.nickName
 
       if (localStorage.record_chat) {
         this.messages = JSON.parse(localStorage.record_chat)
       }
 
-      this.portrait = 'https://image.guazistatic.com/gz01190717/15/51/c5d5be61ec6032c79c7abc60ced9ed08.jpg'
-      console.log('huode nickname', this.nickName)
+      this.portrait = this.$store.state.portrait
     },
     watch: {
       messages: {
@@ -103,7 +103,8 @@
       // 监听通信事件
       socket.on('leave', name => {
         if (name != null) {
-          console.log(this.messages)
+          this.$store.commit('setLoginStatus', false)
+
           this.messages && this.messages.push({
             from: 'system',
             content: `系统消息：${name}离开群聊`

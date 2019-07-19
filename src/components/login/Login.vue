@@ -68,7 +68,9 @@
 
         socket.on('loginSuccess', data => {
           console.log(data)
-          localStorage.nickName = JSON.stringify(data.username)
+          // localStorage.nickName = JSON.stringify(data.username)
+          this.$store.commit('setNickname', data.username)
+          this.$store.commit('setLoginStatus', true)
           this.$router.push('/Chat')
         })
 
