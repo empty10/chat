@@ -18,7 +18,7 @@
 
                 <div class="itemContent" :class="{'myselfContent':item.from == 'myself'}">{{item.content}}</div>
               </div>
-              <div class="itemFace">
+              <div class="itemFace" @click="privateChat(item)">
                 <img :src="item.portrait" alt="">
               </div>
             </li>
@@ -166,6 +166,9 @@
           console.log(data, 'fail')
           alert('昵称重复，登录失败')
         })
+      },
+      privateChat (person) {
+        console.log('开始私聊', person)
       },
       sendMsg () {
         if (!this.inputValue) {
