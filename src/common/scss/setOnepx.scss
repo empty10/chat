@@ -1,0 +1,26 @@
+@mixin setOnePxAll($color){
+    content:" ";
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    transform: scale(0.5);
+    transform-origin: left top;
+    box-sizing: border-box;
+    border: 1px solid $color;
+}
+@mixin setOnePxBottom($color,$borderWidth:100%) {
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid $color;
+    color: $color;
+    transform-origin: 0 100%;
+    width: $borderWidth;
+    margin: 0 auto ;
+    transform: scaleY(0.5);
+}

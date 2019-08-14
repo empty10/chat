@@ -1,17 +1,18 @@
 <template>
-  <div class="chat">
-    <div class="chatHeader">
-      weChat
-    </div>
-    <div class="chatContent" ref="chatContent">
-      <ul class="messageList" >
-        <template  v-for="item in messages">
-          <li class="information" v-if="item.from=='system'">
-            <div class="infoBox">
-              {{item.content}}
-            </div>
-          </li>
-          <li class="listItem" :class="{ 'myself':item.from == 'myself' }" v-else>
+  <div class="chatBox">
+    <div class="chat">
+      <div class="chatHeader">
+        weChat
+      </div>
+      <div class="chatContent" ref="chatContent">
+        <ul class="messageList" >
+          <template  v-for="item in messages">
+            <li class="information" v-if="item.from=='system'">
+              <div class="infoBox">
+                {{item.content}}
+              </div>
+            </li>
+            <li class="listItem" :class="{ 'myself':item.from == 'myself' }" v-else>
               <div class="itemWrap">
                 <div class="userName" v-show="item.from=='other' " >{{item.nickName}}</div>
 
@@ -20,20 +21,30 @@
               <div class="itemFace">
                 <img :src="item.portrait" alt="">
               </div>
-          </li>
-        </template>
-      </ul>
-    </div>
-    <div class="chatFooter">
-      <div class="mojiBox">
-
+            </li>
+          </template>
+        </ul>
       </div>
-      <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter="sendMsg">
+      <div class="chatFooter">
+        <div class="mojiBox">
+
+        </div>
+        <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter="sendMsg">
 
       </textarea>
-      <div class="sendBtn" @click="sendMsg" >
-        发送
+        <div class="sendBtn" @click="sendMsg" >
+          发送
+        </div>
       </div>
+    </div>
+    <div class="login">
+        <div class="loginBox">
+            <div class="loginTip">请输入你的昵称:)</div>
+            <input type="text" class="inputNickName">
+            <div  class="inputBoxButton">
+                登录
+            </div>
+        </div>
     </div>
   </div>
 </template>
@@ -52,14 +63,18 @@
         portrait: '',
         location: '北京',
         messages: [],
-        onlineTip: ''
+        onlineTip: '',
+        isLoginStatus: false
       }
     },
     created () {
       if (!this.$store.state.isLogin) {
-        console.log('尚未登录')
-        this.$router.push('/')
+        console.log('尚未登录！')
+        // this.$router.push('/')
         return
+      } else {
+        console.log('已经登录！')
+        this.isLoginStatus = true
       }
       this.nickName = this.$store.state.nickName
 

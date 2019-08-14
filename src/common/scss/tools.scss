@@ -1,0 +1,135 @@
+/* wap端 1像素边框 */
+//注：父级需要添加position:relative和z-index:0
+@mixin border1px($t: left, $color: #000, $pos: after) {
+	@if ($pos == after) {
+		&:after {
+			content: '';
+			position: absolute;
+
+			@if ($t == left) {
+				top: 0;
+				left: 0;
+				width: 1px;
+				height: 100%;
+				transform: scaleX(0.5);
+				background: $color;
+				transform-origin: 0 0;
+				@content;
+			} @else if ($t == right) {
+				bottom: 0;
+				right: 0;
+				width: 1px;
+				height: 100%;
+				transform: scaleX(0.5);
+				background: $color;
+				transform-origin: 0 0;
+				@content;
+			} @else if ($t == top) {
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 1px;
+				transform: scaleY(0.5);
+				background: $color;
+				transform-origin: 0 0;
+				@content;
+			} @else if ($t == bottom) {
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 1px;
+				transform: scaleY(0.5);
+				background: $color;
+				transform-origin: 0 0;
+				@content;
+			} @else if ($t == all) {
+				top: 0;
+				left: 0;
+				width: 200%;
+				height: 200%;
+				transform: scale(0.5);
+				transform-origin: left top;
+				box-sizing: border-box;
+				border: 1px solid $color;
+				z-index: -1;
+				@content;
+			}
+		}
+	} @else {
+		&:before {
+			content: '';
+			position: absolute;
+
+			@if ($t == left) {
+				top: 0;
+				left: 0;
+				width: 1px;
+				height: 100%;
+				transform: scaleX(0.5);
+				background: $color;
+				transform-origin: 0 0;
+				@content;
+			} @else if ($t == right) {
+				bottom: 0;
+				right: 0;
+				width: 1px;
+				height: 100%;
+				transform: scaleX(0.5);
+				background: $color;
+				transform-origin: 0 0;
+				@content;
+			} @else if ($t == top) {
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 1px;
+				transform: scaleY(0.5);
+				background: $color;
+				transform-origin: 0 0;
+				@content;
+			} @else if ($t == bottom) {
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 1px;
+				transform: scaleY(0.5);
+				background: $color;
+				transform-origin: 0 0;
+				@content;
+			} @else if ($t == all) {
+				top: 0;
+				left: 0;
+				width: 200%;
+				height: 200%;
+				transform: scale(0.5);
+				transform-origin: left top;
+				box-sizing: border-box;
+				border: 1px solid $color;
+				z-index: -1;
+				@content;
+			}
+		}
+	}
+}
+/* 一行省略文字 */
+%text-overflow {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+/* 多行省略文字 */
+@mixin hideLineWord($num: 1) {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	-webkit-line-clamp: $num;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+/* 媒体查询：3倍retina屏幕 */
+@mixin media3X() {
+	@media screen and (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+		@content;
+	}
+}
