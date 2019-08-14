@@ -11,7 +11,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
+const PORT = 8090
 
 // 搭建一个socket.io服务
 const app = require('express')
@@ -29,7 +29,7 @@ io.sockets.on('connection', socket => {
   let username = null
   /* 监听登录 */
   socket.on('login', function (data) {
-    for (var i = 0; i < users.length; i++) {
+    for (let i = 0; i < users.length; i++) {
       if (users[i].username === data.username) {
         isNewPerson = false
         break
@@ -37,19 +37,18 @@ io.sockets.on('connection', socket => {
         isNewPerson = true
       }
     }
-    console.log('users===', users)
+
     if (isNewPerson) {
       username = data.username
       users.push({
         username: data.username
       })
+      console.log('users++++', users)
       /* 登录成功 */
-      socket.emit('loginSuccess', data)
-      /* 向所有连接的客户端广播add事件 */
-      io.sockets.emit('add', data)
+      socket.emit('loginSuccess', data, users.length)
     } else {
       /* 登录失败 */
-      socket.emit('loginFail', '')
+      socket.emit('loginFail', data)
     }
   })
 
@@ -59,7 +58,7 @@ io.sockets.on('connection', socket => {
   })
 
   // 上线
-  socket.on('online', data => {
+  socket.emit('online', data => {
     // socket.broadcast.emit('online', data)
     io.sockets.emit('online', data)
 
@@ -68,14 +67,22 @@ io.sockets.on('connection', socket => {
 
   // 断开连接
   socket.on('disconnect', () => {
-    /* 向所有连接的客户端广播leave事件 */
-    io.sockets.emit('leave', username)
-    console.log(username, '离开群聊')
-    users.map(function (val, index) {
-      if (val.username === username) {
-        users.splice(index, 1)
+    if (users.length === 0) {
+      console.log('聊天室暂时无人')
+      return
+    }
+    if (username) {
+      let usr = users.map(item => item.username)
+      let index = usr.indexOf(username)
+      console.log(username, '离开群聊', usr, index)
+      if (index < 0) {
+        console.log('数组中没有这个人')
+        return
       }
-    })
+      io.sockets.emit('leave', username)
+      users.splice(index, 1)
+      console.log(username, '离开群聊后user=', users)
+    }
   })
 })
 

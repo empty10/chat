@@ -37,11 +37,11 @@
         </div>
       </div>
     </div>
-    <div class="login">
+    <div class="login" v-show="showLoginStatus">
         <div class="loginBox">
             <div class="loginTip">请输入你的昵称:)</div>
-            <input type="text" class="inputNickName">
-            <div  class="inputBoxButton">
+            <input type="text" class="inputNickName" v-model="nickName">
+            <div  class="inputBoxButton" @click="enterChat">
                 登录
             </div>
         </div>
@@ -53,28 +53,31 @@
   import io from 'socket.io-client'
 
   // 建立socket.io通信
-  const socket = io.connect('http://localhost:8080')
+  const socket = io.connect('http://localhost:8090')
+
   export default {
     name: 'Chat',
     data () {
       return {
         inputValue: '',
-        nickName: 'aaa',
-        portrait: '',
+        nickName: '',
+        portrait: 'http://tva2.sinaimg.cn/crop.0.0.180.180.50/62d8efadjw1e8qgp5bmzyj2050050aa8.jpg',
         location: '北京',
         messages: [],
         onlineTip: '',
-        isLoginStatus: false
+        showLoginStatus: false
       }
     },
     created () {
       if (!this.$store.state.isLogin) {
         console.log('尚未登录！')
         // this.$router.push('/')
+        this.$store.commit('setLoginStatus', false)
+        this.showLoginStatus = true
         return
       } else {
         console.log('已经登录！')
-        this.isLoginStatus = true
+        this.showLoginStatus = false
       }
       this.nickName = this.$store.state.nickName
 
@@ -103,19 +106,6 @@
       })
 
       // 监听通信事件
-      socket.on('online', name => {
-        console.log('online====', name)
-        if (!name) {
-          return
-        }
-
-        this.messages.push({
-          from: 'system',
-          content: `系统消息：${name}加入群聊`
-        })
-      })
-
-      // 监听通信事件
       socket.on('leave', name => {
         if (name != null) {
           this.$store.commit('setLoginStatus', false)
@@ -135,10 +125,48 @@
       })
 
       // 发送上线事件
-      console.log('----上线', this.nickName)
+      console.log(this.nickName, '----上线')
     },
 
     methods: {
+      enterChat () {
+        if (!this.nickName) {
+          alert('请输入昵称')
+          return
+        }
+
+        /* 定义用户名 */
+        if (this.nickName) {
+          /* 向服务端发送登录事件 */
+          socket.emit('login', {username: this.nickName})
+        } else {
+          alert('请输入昵称')
+        }
+
+        socket.on('loginSuccess', data => {
+          console.log(data)
+          // localStorage.nickName = JSON.stringify(data.username)
+          this.$store.commit('setNickname', data.username)
+          this.$store.commit('setLoginStatus', true)
+          this.showLoginStatus = false
+
+          if (!data) {
+            return
+          }
+
+          this.messages.push({
+            from: 'system',
+            content: `系统消息：${data.username}加入群聊`
+          })
+        }, count => {
+          console.log('count =', count)
+        })
+
+        socket.on('loginFail', data => {
+          console.log(data, 'fail')
+          alert('昵称重复，登录失败')
+        })
+      },
       sendMsg () {
         if (!this.inputValue) {
           return
