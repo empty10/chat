@@ -1,6 +1,9 @@
 <template>
   <div class="chatBox">
     <div class="chat">
+      <div class="leftBar">
+          wechat
+      </div>
       <div class="chatHeader">
         weChat
       </div>
@@ -26,12 +29,8 @@
         </ul>
       </div>
       <div class="chatFooter">
-        <div class="mojiBox">
-
-        </div>
-        <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter="sendMsg">
-
-      </textarea>
+        <div class="mojiBox"></div>
+        <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter="sendMsg"></textarea>
         <div class="sendBtn" @click="sendMsg" >
           发送
         </div>

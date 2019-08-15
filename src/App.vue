@@ -19,6 +19,7 @@ export default {
 <style>
   body{
     margin: 0;
+    /*background-color: #b2b2b2;*/
     display: flex;
     justify-content: center;
   }
@@ -29,10 +30,10 @@ export default {
   text-align: center;
   color: #222;
   margin: 0;
-  max-width: 1242px;
-  width: 750px;
-  min-height: 21rem;
-  height: 1334px;
+  width: 800px;
+  height: 600px;
+  /*min-height: 21rem;*/
+  /*height: 1334px;*/
   display: flex;
   align-items: center;
   justify-content: center;
