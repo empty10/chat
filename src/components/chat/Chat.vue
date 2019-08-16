@@ -4,35 +4,37 @@
       <div class="leftBar">
           wechat
       </div>
-      <div class="chatHeader">
-        weChat
-      </div>
-      <div class="chatContent" ref="chatContent">
-        <ul class="messageList" >
-          <template  v-for="item in messages">
-            <li class="information" v-if="item.from=='system'">
-              <div class="infoBox">
-                {{item.content}}
-              </div>
-            </li>
-            <li class="listItem" :class="{ 'myself':item.from == 'myself' }" v-else>
-              <div class="itemWrap">
-                <div class="userName" v-show="item.from=='other' " >{{item.nickName}}</div>
+      <div class="rightContent">
+        <div class="chatHeader">
+          FE交流群(28)
+        </div>
+        <div class="chatContent" ref="chatContent">
+          <ul class="messageList" >
+            <template  v-for="item in messages">
+              <li class="information" v-if="item.from=='system'">
+                <div class="infoBox">
+                  {{item.content}}
+                </div>
+              </li>
+              <li class="listItem" :class="{ 'myself':item.from == 'myself' }" v-else>
+                <div class="itemWrap">
+                  <div class="userName" v-show="item.from=='other' " >{{item.nickName}}</div>
 
-                <div class="itemContent" :class="{'myselfContent':item.from == 'myself'}">{{item.content}}</div>
-              </div>
-              <div class="itemFace" @click="privateChat(item)">
-                <img :src="item.portrait" alt="">
-              </div>
-            </li>
-          </template>
-        </ul>
-      </div>
-      <div class="chatFooter">
-        <div class="mojiBox"></div>
-        <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter="sendMsg"></textarea>
-        <div class="sendBtn" @click="sendMsg" >
-          发送
+                  <div class="itemContent" :class="{'myselfContent':item.from == 'myself'}">{{item.content}}</div>
+                </div>
+                <div class="itemFace" @click="privateChat(item)">
+                  <img :src="item.portrait" alt="">
+                </div>
+              </li>
+            </template>
+          </ul>
+        </div>
+        <div class="chatFooter">
+          <!--<div class="mojiBox"></div>-->
+          <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter="sendMsg"></textarea>
+          <div class="sendBtn" @click="sendMsg" >
+            发送
+          </div>
         </div>
       </div>
     </div>
