@@ -5,8 +5,7 @@
 //@import "../../common/scss/text";
 
 .chatBox{
-  width: 100%;
-  height: 100%;
+  position: relative;
 }
 
 .leftBar{
@@ -24,34 +23,42 @@
   width: 800px;
   background-color: rgba(126, 126, 126, 0.70);
   color:#000;
-  font-size: 1rem;
+ font-size: 16px;
   z-index: 99;
+  text-align: center;
 }
 
 .loginBox{
-  margin: 50% 0 0 0;
-  font-size: 1rem;
+  display: inline-block;
+  margin: 30% 0 0 0;
+  width: 300px;
+  height: 300px;
+  font-size: 16px;
 }
 
 .loginTip{
-  padding: 0.5rem;
+  padding: 6px;
 }
+
 .inputNickName{
-  font-size: 1rem;
-  width: 10rem;
-  height: 2rem;
-  padding: 0.5rem;
+  font-size: 16px;
+  padding: 6px;
   box-sizing: border-box;
-  border-radius: 0.3rem;
+  border-radius: 3px;
+  width: 180px;
+  height: 34px;
+  box-sizing: border-box;
 }
 .inputBoxButton{
-  width: 10rem;
-  height: 2rem;
   color: white;
-  margin: 1rem 7rem;
-  background-color: #44b549;
+  display: inline-block;
+  margin-top: 20px;
+  line-height: 34px;
+  width: 180px;
+  height: 34px;
   box-sizing: border-box;
-  border: 0.5rem;
+  background-color: #44b549;
+  border: 2px;
 }
 .chat{
   width: 800px;
@@ -117,7 +124,7 @@
 .sendBtn{
   width: 5rem;
   line-height: 2rem;
-  font-size: 1rem;
+ font-size: 16px;
   box-sizing: border-box;
   text-align: center;
   margin: 0.5rem;
@@ -164,7 +171,7 @@
   font-size: 0.8rem;
 }
 .itemContent{
-  font-size: 1rem;
+ font-size: 16px;
   padding: 0.5rem;
   text-align:left;
   word-break: break-word;

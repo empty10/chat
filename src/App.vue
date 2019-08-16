@@ -27,11 +27,10 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #222;
   margin: 0;
-  width: 800px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
   /*min-height: 21rem;*/
   /*height: 1334px;*/
   display: flex;
