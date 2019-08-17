@@ -45,7 +45,8 @@ io.sockets.on('connection', socket => {
       })
       console.log('users++++', users)
       /* 登录成功 */
-      socket.emit('loginSuccess', data, users.length)
+      // socket.emit('loginSuccess', data, users.length)
+      socket.emit('loginSuccess', {data, count: users.length})
     } else {
       /* 登录失败 */
       socket.emit('loginFail', data)
@@ -71,6 +72,7 @@ io.sockets.on('connection', socket => {
       console.log('聊天室暂时无人')
       return
     }
+
     if (username) {
       let usr = users.map(item => item.username)
       let index = usr.indexOf(username)
@@ -79,9 +81,10 @@ io.sockets.on('connection', socket => {
         console.log('数组中没有这个人')
         return
       }
-      io.sockets.emit('leave', username)
       users.splice(index, 1)
-      console.log(username, '离开群聊后user=', users)
+      let length = users.length
+      console.log(username, '离开群聊后user=', length)
+      io.sockets.emit('leave', {username, count: length})
     }
   })
 })

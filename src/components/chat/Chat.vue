@@ -6,7 +6,7 @@
       </div>
       <div class="rightContent">
         <div class="chatHeader">
-          FE交流群(28)
+          FE交流群({{ count }})
         </div>
         <div class="chatContent" ref="chatContent">
           <ul class="messageList" >
@@ -65,6 +65,7 @@
         portrait: 'http://tva2.sinaimg.cn/crop.0.0.180.180.50/62d8efadjw1e8qgp5bmzyj2050050aa8.jpg',
         location: '北京',
         messages: [],
+        count: 0,
         onlineTip: '',
         showLoginStatus: false
       }
@@ -107,7 +108,10 @@
       })
 
       // 监听通信事件
-      socket.on('leave', name => {
+      socket.on('leave', params => {
+        console.log('leave', params)
+        let name = params.username
+        this.count = params.count
         if (name != null) {
           this.$store.commit('setLoginStatus', false)
 
@@ -116,6 +120,8 @@
             content: `系统消息：${name}离开群聊`
           })
         }
+
+        console.log('现在有' + this.count + '人参与群聊')
       })
 
       socket.on('receiveMsg', data => {
@@ -144,23 +150,25 @@
           alert('请输入昵称')
         }
 
-        socket.on('loginSuccess', data => {
-          console.log(data)
+        socket.on('loginSuccess', params => {
+          console.log(params)
+          let name = params.data && params.data.username
+          this.count = params.count
           // localStorage.nickName = JSON.stringify(data.username)
-          this.$store.commit('setNickname', data.username)
+          this.$store.commit('setNickname', name)
           this.$store.commit('setLoginStatus', true)
           this.showLoginStatus = false
 
-          if (!data) {
+          if (!name) {
             return
           }
 
           this.messages.push({
             from: 'system',
-            content: `系统消息：${data.username}加入群聊`
+            content: `系统消息：${name}加入群聊`
           })
-        }, count => {
-          console.log('count =', count)
+
+          console.log('此时聊天室有' + this.count + '人参加群聊')
         })
 
         socket.on('loginFail', data => {
