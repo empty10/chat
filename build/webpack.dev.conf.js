@@ -11,14 +11,14 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
-const PORT = 8090
+const PORT = process.env.PORT && Number(process.env.PORT)
 
 // 搭建一个socket.io服务
 const app = require('express')
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
-server.listen(process.env.PORT || 8090)
+server.listen(8080)
 
 let users = []
 
@@ -46,7 +46,7 @@ io.sockets.on('connection', socket => {
       console.log('users++++', users)
       /* 登录成功 */
       // socket.emit('loginSuccess', data, users.length)
-      socket.emit('loginSuccess', {data, count: users.length})
+      io.sockets.emit('loginSuccess', {username, count: users.length})
     } else {
       /* 登录失败 */
       socket.emit('loginFail', data)

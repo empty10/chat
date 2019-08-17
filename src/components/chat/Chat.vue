@@ -54,7 +54,7 @@
   import io from 'socket.io-client'
 
   // 建立socket.io通信
-  const socket = io.connect('http://localhost:8090')
+  const socket = io.connect('http://localhost:8080')
 
   export default {
     name: 'Chat',
@@ -152,7 +152,7 @@
 
         socket.on('loginSuccess', params => {
           console.log(params)
-          let name = params.data && params.data.username
+          let name = params.username
           this.count = params.count
           // localStorage.nickName = JSON.stringify(data.username)
           this.$store.commit('setNickname', name)
