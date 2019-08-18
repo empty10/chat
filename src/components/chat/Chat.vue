@@ -31,7 +31,7 @@
         </div>
         <div class="chatFooter">
           <!--<div class="mojiBox"></div>-->
-          <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter="sendMsg"></textarea>
+          <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter.prevent="sendMsg"></textarea>
           <div class="sendBtn" @click="sendMsg" >
             发送
           </div>
@@ -41,7 +41,7 @@
     <div class="login" v-show="showLoginStatus">
         <div class="loginBox">
             <div class="loginTip">请输入你的昵称:)</div>
-            <input type="text" class="inputNickName" v-model="nickName">
+            <input type="text" class="inputNickName" autofocus v-model="nickName">
             <div  class="inputBoxButton" @click="enterChat">
                 登录
             </div>
@@ -83,11 +83,16 @@
       }
       this.nickName = this.$store.state.nickName
 
-      if (localStorage.record_chat) {
-        this.messages = JSON.parse(localStorage.record_chat)
-      }
-
       this.portrait = this.$store.state.portrait
+
+      if (localStorage.record_chat) {
+        let messages = JSON.parse(localStorage.record_chat)
+        messages.forEach(item => {
+          if (item.nickName === this.nickName) {
+            this.messages = this.messages.push(item)
+          }
+        })
+      }
     },
     watch: {
       messages: {
@@ -99,14 +104,6 @@
       }
     },
     mounted () {
-      // 监听登录成功事件
-      socket.on('add', data => {
-        this.messages.push({
-          from: 'system',
-          content: `系统消息：${data.username}进入群聊`
-        })
-      })
-
       // 监听通信事件
       socket.on('leave', params => {
         console.log('leave', params)
@@ -154,7 +151,6 @@
           console.log(params)
           let name = params.username
           this.count = params.count
-          // localStorage.nickName = JSON.stringify(data.username)
           this.$store.commit('setNickname', name)
           this.$store.commit('setLoginStatus', true)
           this.showLoginStatus = false
@@ -180,10 +176,9 @@
         console.log('开始私聊', person)
       },
       sendMsg () {
-        if (!this.inputValue) {
+        if (this.inputValue === '' || this.inputValue === '\n') {
           return
         }
-        console.log('点击发送', this.inputValue)
 
         socket.emit('sendMsg', {
           from: 'other',
@@ -196,6 +191,7 @@
 
         this.pushMine()
         this.inputValue = ''
+        console.log('点击发送', this.inputValue)
       },
 
       getTime () {
