@@ -78,7 +78,7 @@ io.sockets.on('connection', socket => {
       let index = usr.indexOf(username)
       console.log(username, '离开群聊', usr, index)
       if (index < 0) {
-        console.log('数组中没有这个人')
+        console.log('用户组中没有这个人')
         return
       }
       users.splice(index, 1)
