@@ -13,7 +13,7 @@
             <template  v-for="item in messages">
               <li class="information" v-if="item.from=='system'">
                 <div class="infoBox">
-                  {{item.content}}
+                  {{item.date+' '+item.content}}
                 </div>
               </li>
               <li class="listItem" :class="{ 'myself':item.from == 'myself' }" v-else>
@@ -115,7 +115,9 @@
 
           this.messages && this.messages.push({
             from: 'system',
-            content: `系统消息：${name}离开群聊`
+            type: '系统消息',
+            content: `${name}离开群聊`,
+            date: this.getTime().toString().split(' ')[1]
           })
         }
 
@@ -162,7 +164,9 @@
 
           this.messages.push({
             from: 'system',
-            content: `系统消息：${name}加入群聊`
+            type: '系统消息',
+            content: `${name}加入群聊`,
+            date: this.getTime().toString().split(' ')[1]
           })
 
           console.log('此时聊天室有' + this.count + '人参加群聊')
@@ -196,7 +200,7 @@
       },
 
       getTime () {
-        return this.moment().format('YYYY-MM-DD HH:mm:ss')
+        return this.moment().format('MM-DD HH:mm')
       },
 
       pushMine () {
