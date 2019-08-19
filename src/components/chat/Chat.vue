@@ -54,7 +54,8 @@
   import io from 'socket.io-client'
 
   // 建立socket.io通信
-  const socket = io.connect('http://localhost:8080')
+  let socket = io.connect('http://localhost:8080')
+  socket.io.opts.transports = ['websocket']
 
   export default {
     name: 'Chat',
