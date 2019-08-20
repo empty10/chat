@@ -32,7 +32,7 @@
         <div class="chatFooter">
           <div class="chatFooterBar">
               <div class="mojiBox" @click="handleFace"></div>
-              <div class="imgBox" @click="handleImage">
+              <div class="imgBox" ref="imgBox" @click="handleImage">
                 图片
               </div>
           </div>
@@ -188,7 +188,27 @@
         console.log('face')
       },
       handleImage () {
-        console.log('image')
+        let imageInput = this.$refs.imgBox
+        // 得到该图片
+        console.log('image', imageInput)
+        let file = imageInput.files[0]
+      // 创建一个FileReader对象，进行下一步的操作
+        let reader = new FileReader()
+      // 通过readAsDataURL读取图片
+        reader.readAsDataURL(file)
+
+      // 读取完毕会自动触发，读取结果保存在result中
+        reader.onload = function () {
+          let data = {
+            from: 'other',
+            date: this.getTime(),
+            nickName: this.nickName,
+            portrait: this.portrait,
+            location: this.location,
+            img: this.result
+          }
+          socket.emit('sendImg', data)
+        }
       },
       privateChat (person) {
         console.log('开始私聊', person)

@@ -58,6 +58,13 @@ io.sockets.on('connection', socket => {
     io.sockets.emit('receiveMsg', data)
   })
 
+  // 发送图片
+  socket.on('sendImg', data => {
+    console.log('image', data)
+    data.id = socket.id
+    io.emit('receiveImg', data)
+  })
+
   // 上线
   socket.emit('online', data => {
     // socket.broadcast.emit('online', data)
