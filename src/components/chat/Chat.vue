@@ -40,8 +40,8 @@
                   </div>
                 </div>
               </div>
-              <div class="imgBox" ref="imgBox" @click="handleImage">
-                图片
+              <div class="imgBox"  ref="imgBox"  >
+                <input type="file" @change="handleImage" >
               </div>
           </div>
           <div class="chatFooterBox">
@@ -84,7 +84,7 @@
         count: 0,
         onlineTip: '',
         showLoginStatus: false,
-        isShowEmoji: true,
+        isShowEmoji: false,
         emoji: ['😃', '😁', '😂', '😧', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '😙', '😚', '🙂', '🤗', '😭', '🤔', '😳', '😐', '😑', '😶', '🙄', '😏', '😣', '😥', '😮', '🤐', '😯', '😪', '😫', '😴', '😌', '😛', '😟', '😝', '😒', '😓', '😔', '😕', '🙃', '🤑', '😲', '🙁', '😖', '😞', '😟', '😤', '😢', '😦'
         ]
 
@@ -207,13 +207,20 @@
         this.isShowEmoji = !this.isShowEmoji
       },
       handleImage () {
-        let imageInput = this.$refs.imgBox
+        let Imginput = document.getElementById('imgBox')
+
+        console.log(Imginput, this.$refs.imgBox)
+        console.log(Imginput === this.$refs.imgBox)
+        debugger
         // 得到该图片
-        console.log('image', imageInput)
-        let file = imageInput.files[0]
+        let file = Imginput.files[0]
       // 创建一个FileReader对象，进行下一步的操作
         let reader = new FileReader()
-      // 通过readAsDataURL读取图片
+        if (!reader) {
+          console.log('系统消息 ', '您的浏览器不支持图片发送功能...')
+          return
+        }
+        // 通过readAsDataURL读取图片
         reader.readAsDataURL(file)
 
       // 读取完毕会自动触发，读取结果保存在result中
