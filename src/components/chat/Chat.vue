@@ -30,10 +30,17 @@
           </ul>
         </div>
         <div class="chatFooter">
-          <!--<div class="mojiBox"></div>-->
-          <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter.prevent="sendMsg"></textarea>
-          <div class="sendBtn" @click="sendMsg" >
-            发送
+          <div class="chatFooterBar">
+              <div class="mojiBox" @click="handleFace"></div>
+              <div class="imgBox" @click="handleImage">
+                图片
+              </div>
+          </div>
+          <div class="chatFooterBox">
+            <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter.prevent="sendMsg"></textarea>
+            <div class="sendBtn" @click="sendMsg" >
+              发送
+            </div>
           </div>
         </div>
       </div>
@@ -176,6 +183,12 @@
           console.log(data, 'fail')
           alert('昵称重复，登录失败')
         })
+      },
+      handleFace () {
+        console.log('face')
+      },
+      handleImage () {
+        console.log('image')
       },
       privateChat (person) {
         console.log('开始私聊', person)
