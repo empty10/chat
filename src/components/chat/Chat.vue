@@ -31,13 +31,21 @@
         </div>
         <div class="chatFooter">
           <div class="chatFooterBar">
-              <div class="mojiBox" @click="handleFace"></div>
+              <div class="mojiBoxBtn" @click="handleFace">
+                <div class="mojiBox" v-show="isShowEmoji">
+                  <div class="emoji-wrap">
+                    <ul class="emoji-list">
+                      <li v-for="item of emoji" @click="inputEmoji(item)">{{ item }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
               <div class="imgBox" ref="imgBox" @click="handleImage">
                 图片
               </div>
           </div>
           <div class="chatFooterBox">
-            <textarea class="textBox" v-model="inputValue" autofocus @keyup.enter.prevent="sendMsg"></textarea>
+            <textarea class="textBox" v-model="inputValue" @focus="hideEmoji" autofocus @keyup.enter.prevent="sendMsg"></textarea>
             <div class="sendBtn" @click="sendMsg" >
               发送
             </div>
@@ -75,7 +83,11 @@
         messages: [],
         count: 0,
         onlineTip: '',
-        showLoginStatus: false
+        showLoginStatus: false,
+        isShowEmoji: true,
+        emoji: ['😃', '😁', '😂', '😧', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '😙', '😚', '🙂', '🤗', '😭', '🤔', '😳', '😐', '😑', '😶', '🙄', '😏', '😣', '😥', '😮', '🤐', '😯', '😪', '😫', '😴', '😌', '😛', '😟', '😝', '😒', '😓', '😔', '😕', '🙃', '🤑', '😲', '🙁', '😖', '😞', '😟', '😤', '😢', '😦'
+        ]
+
       }
     },
     created () {
@@ -184,8 +196,15 @@
           alert('昵称重复，登录失败')
         })
       },
+      inputEmoji (emoji) {
+        this.inputValue += emoji
+      },
+      hideEmoji () {
+        this.isShowEmoji = false
+      },
       handleFace () {
         console.log('face')
+        this.isShowEmoji = !this.isShowEmoji
       },
       handleImage () {
         let imageInput = this.$refs.imgBox

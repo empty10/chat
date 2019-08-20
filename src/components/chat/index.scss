@@ -110,6 +110,21 @@
 }
 
 .mojiBox{
+  width: 300px;
+  height: 100px;
+  margin-top: -120px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: rgba(176, 176, 176, 0.6);
+  border: 1px solid #e5e5e5;
+}
+
+.emoji-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.mojiBoxBtn{
   width: 20px;
   height: 20px;
   line-height: 20px;
