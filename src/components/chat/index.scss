@@ -111,8 +111,8 @@
 
 .mojiBox{
   width: 300px;
-  height: 100px;
-  margin-top: -120px;
+  height: 180px;
+  margin-top: -190px;
   padding: 10px;
   box-sizing: border-box;
   background-color: rgba(176, 176, 176, 0.6);
@@ -124,6 +124,9 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+.emoji-item{
+  padding: 3px;
+}
 .mojiBoxBtn{
   width: 20px;
   height: 20px;
@@ -134,12 +137,16 @@
   background: url("../../assets/biaoqing.png") no-repeat;
   background-size: contain;
 }
+
+.clickable{
+  background: url("../../assets/emotionDis.png") no-repeat;
+  background-size: contain;
+}
 .imgBox{
   width: 40px;
   height: 20px;
   line-height: 20px;
   text-align: center;
-  margin: 0 20px;
 }
 
 .textBox{

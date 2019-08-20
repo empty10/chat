@@ -31,11 +31,11 @@
         </div>
         <div class="chatFooter">
           <div class="chatFooterBar">
-              <div class="mojiBoxBtn" @click="handleFace">
+              <div class="mojiBoxBtn" :class="{'clickable':isShowEmoji}" @click="handleFace">
                 <div class="mojiBox" v-show="isShowEmoji">
                   <div class="emoji-wrap">
                     <ul class="emoji-list">
-                      <li v-for="item of emoji" @click="inputEmoji(item)">{{ item }}</li>
+                      <li class="emoji-item" v-for="item of emoji" @click="inputEmoji(item)">{{ item }}</li>
                     </ul>
                   </div>
                 </div>
