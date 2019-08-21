@@ -142,11 +142,36 @@
   background: url("../../assets/emotionDis.png") no-repeat;
   background-size: contain;
 }
+
+.imWrap{
+  position: relative;
+  width: 40px;
+  height: 20px;
+}
 .imgBox{
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 40px;
   height: 20px;
   line-height: 20px;
   text-align: center;
+  opacity: 0;
+  z-index: 5;
+}
+
+.imageFile{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 20px;
+  z-index: 0;
+  background: url('https://image.guazistatic.com/gz01190821/11/50/b7969ce858743c036c9a556e001a705c.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  //background-color: blue;
 }
 
 .textBox{

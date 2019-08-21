@@ -40,8 +40,9 @@
                   </div>
                 </div>
               </div>
-              <div class="imgBox"  ref="imgBox"  >
-                <input type="file" @change="handleImage" >
+              <div class="imWrap" >
+                <input type="file" class="imgBox"  ref="imgBox"  @change="handleImage" >
+                <div class="imageFile" id="imageFile"></div>
               </div>
           </div>
           <div class="chatFooterBox">
@@ -209,9 +210,8 @@
       handleImage () {
         let Imginput = document.getElementById('imgBox')
 
-        console.log(Imginput, this.$refs.imgBox)
+        console.log(Imginput, Imginput.files[0])
         console.log(Imginput === this.$refs.imgBox)
-        debugger
         // 得到该图片
         let file = Imginput.files[0]
       // 创建一个FileReader对象，进行下一步的操作
