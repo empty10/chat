@@ -19,8 +19,10 @@
               <li class="listItem" :class="{ 'myself':item.from == 'myself' }" v-else>
                 <div class="itemWrap">
                   <div class="userName" v-show="item.from=='other' " >{{item.nickName}}</div>
-
-                  <div class="itemContent" :class="{'myselfContent':item.from == 'myself'}">{{item.content}}</div>
+                  <div class="itemContent" :class="{'myselfContent':item.from == 'myself'}">
+                    <img v-if="item.img"  :src=item.img alt="图片" width="100%" >
+                    {{item.content}}
+                  </div>
                 </div>
                 <div class="itemFace" @click="privateChat(item)">
                   <img :src="item.portrait" alt="">
@@ -207,34 +209,41 @@
         console.log('face')
         this.isShowEmoji = !this.isShowEmoji
       },
-      handleImage () {
-        let Imginput = document.getElementById('imgBox')
-
-        console.log(Imginput, Imginput.files[0])
-        console.log(Imginput === this.$refs.imgBox)
+      handleImage (e) {
+        let files = e.target.files
+        if (files.length === 0) {
+          return
+        }
         // 得到该图片
-        let file = Imginput.files[0]
+        let file = files[0]
       // 创建一个FileReader对象，进行下一步的操作
         let reader = new FileReader()
         if (!reader) {
           console.log('系统消息 ', '您的浏览器不支持图片发送功能...')
           return
         }
-        // 通过readAsDataURL读取图片
-        reader.readAsDataURL(file)
 
       // 读取完毕会自动触发，读取结果保存在result中
-        reader.onload = function () {
+        reader.onload = () => {
+          let src = reader.result  // 读取结果
+          // let img = '<img class="sendImg" src="' + src + '">'
+          // console.log('====', src, img)
           let data = {
             from: 'other',
             date: this.getTime(),
             nickName: this.nickName,
             portrait: this.portrait,
             location: this.location,
-            img: this.result
+            content: '',
+            img: src
           }
-          socket.emit('sendImg', data)
+          socket.emit('sendMsg', data)
+          this.pushMine(src)
         }
+        // 通过readAsDataURL读取图片 64位
+        reader.readAsDataURL(file)
+
+        this.inputValue = ''
       },
       privateChat (person) {
         console.log('开始私聊', person)
@@ -262,14 +271,15 @@
         return this.moment().format('MM-DD HH:mm')
       },
 
-      pushMine () {
+      pushMine (src) {
         this.messages.push({
           from: 'myself',
           date: this.getTime(),
           nickname: this.nickName,
           portrait: this.portrait,
           location: this.location,
-          content: this.inputValue
+          content: this.inputValue,
+          img: src
         })
       },
 
