@@ -16,7 +16,7 @@ const PORT = process.env.PORT && Number(process.env.PORT)
 // 搭建一个socket.io服务
 const app = require('express')
 const server = require('http').Server(app)
-const io = require('socket.io')(server, {'pingInterval': 2000, 'pingTimeout': 5000})
+const io = require('socket.io')(server, {'pingInterval': 200000, 'pingTimeout': 500000, 'perMessageDeflate': false})
 
 server.listen(8080)
 
