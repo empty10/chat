@@ -72,7 +72,7 @@
   import io from 'socket.io-client'
 
   // 建立socket.io通信
-  let socket = io.connect('http://localhost:8080')
+  let socket = io.connect('http://g.maodou.com:8080')
   socket.io.opts.transports = ['websocket']
 
   export default {
