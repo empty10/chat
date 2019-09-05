@@ -62,7 +62,7 @@ io.sockets.on('connection', socket => {
   socket.on('sendImg', data => {
     console.log('image', data)
     data.id = socket.id
-    io.emit('receiveImg', data)
+    io.sockets.emit('receiveImg', data)
   })
 
   // 上线
@@ -91,7 +91,7 @@ io.sockets.on('connection', socket => {
       users.splice(index, 1)
       let length = users.length
       console.log(username, '离开群聊后user=', length)
-      io.sockets.emit('leave', {username, count: length})
+      socket.broadcast.emit('leave', {username, count: length})
     }
   })
 })
